@@ -31,7 +31,7 @@ docker-compose up -d
    # Connect to MongoDB
    mongosh
    # Create database
-   use eventx
+   use tickethub
    # Exit
    exit
    ```
@@ -47,7 +47,7 @@ docker-compose up -d
 
 3. **Update Backend .env**
    ```env
-   MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/eventx
+   MONGO_URI=mongodb+srv://YOUR_USERNAME:YOUR_PASSWORD@YOUR_CLUSTER.mongodb.net/YOUR_DATABASE
    ```
 
 ## 🧪 **Test MongoDB Connection**

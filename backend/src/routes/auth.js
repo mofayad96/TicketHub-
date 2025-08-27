@@ -5,7 +5,7 @@ import User from '../models/User.js';
 const router = Router();
 
 function signToken(user) {
-  return jwt.sign({ id: user._id, role: user.role, name: user.name }, process.env.JWT_SECRET || 'dev_secret', {
+  return jwt.sign({ id: user._id, role: user.role, name: user.name }, process.env.JWT_SECRET, {
     expiresIn: '7d'
   });
 }
@@ -51,7 +51,7 @@ router.get('/me', async (req, res) => {
     const bearer = req.headers.authorization;
     const token = req.cookies.token || (bearer && bearer.startsWith('Bearer ') ? bearer.slice(7) : null);
     if (!token) return res.status(401).json({ message: 'Unauthorized' });
-    const payload = jwt.verify(token, process.env.JWT_SECRET || 'dev_secret');
+    const payload = jwt.verify(token, process.env.JWT_SECRET);
     const user = await User.findById(payload.id).select('-password');
     if (!user) return res.status(404).json({ message: 'User not found' });
     res.json({ user });

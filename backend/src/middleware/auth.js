@@ -5,7 +5,7 @@ export function requireAuth(req, res, next) {
     const bearer = req.headers.authorization;
     const token = req.cookies.token || (bearer && bearer.startsWith('Bearer ') ? bearer.slice(7) : null);
     if (!token) return res.status(401).json({ message: 'Unauthorized' });
-    const payload = jwt.verify(token, process.env.JWT_SECRET || 'dev_secret');
+    const payload = jwt.verify(token, process.env.JWT_SECRET);
     req.user = payload; // { id, role }
     next();
   } catch (err) {

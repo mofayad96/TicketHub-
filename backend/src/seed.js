@@ -5,16 +5,17 @@ import Event from './models/Event.js';
 
 dotenv.config();
 
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/eventx';
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/tickethub';
 
 async function run() {
   await mongoose.connect(MONGO_URI);
   console.log('Connected to MongoDB');
 
-  const adminEmail = 'admin@eventx.test';
+  const adminEmail = process.env.ADMIN_EMAIL || 'admin@tickethub.test';
   let admin = await User.findOne({ email: adminEmail });
   if (!admin) {
-    admin = await User.create({ name: 'Admin', email: adminEmail, password: 'Admin123!', role: 'admin' });
+    const adminPassword = process.env.ADMIN_PASSWORD || 'Admin123!';
+    admin = await User.create({ name: 'Admin', email: adminEmail, password: adminPassword, role: 'admin' });
     console.log('Created admin user:', adminEmail);
   }
 

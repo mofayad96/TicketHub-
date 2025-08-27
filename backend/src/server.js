@@ -16,13 +16,13 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(morgan('dev'));
 
-app.get('/api/health', (req, res) => res.json({ ok: true, service: 'EventX Backend' }));
+app.get('/api/health', (req, res) => res.json({ ok: true, service: 'TicketHub Backend', timestamp: new Date().toISOString() }));
 app.use('/api/auth', authRouter);
 app.use('/api/events', eventRouter);
 app.use('/api/tickets', ticketRouter);
 
 const PORT = process.env.PORT || 4000;
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/eventx';
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/tickethub';
 
 mongoose
   .connect(MONGO_URI)
